@@ -1,26 +1,27 @@
-# CodeAlpha Basic Network Sniffer
+# Network Packet Sniffer Using Python and Scapy
 
 A Python-based network packet sniffer developed using Scapy to capture, monitor, and analyse network traffic for cybersecurity and network security analysis.
 
 ## Project Overview
 
-This project involves developing a basic network sniffer capable of capturing and analysing IP packets transmitted across a network interface.
+This project involves developing a lightweight network packet sniffer capable of capturing and analysing IP packets transmitted across a network interface.
 
-The tool provides visibility into network communications by identifying source and destination IP addresses, detecting network protocols, inspecting packet headers, and displaying relevant packet information.
+The tool provides visibility into network communications by identifying source and destination IP addresses, detecting network protocols, inspecting transport-layer information, identifying DNS queries, and displaying relevant packet metadata.
 
-The project demonstrates practical knowledge of network protocols, packet inspection, Python programming, and network security monitoring.
+The project demonstrates practical knowledge of TCP/IP networking, packet inspection, Python programming, and network security monitoring.
 
-## Objectives
+## Project Objectives
 
-- Capture live network traffic.
+- Capture live network traffic from a specified network interface.
 - Identify source and destination IP addresses.
 - Detect TCP, UDP, and ICMP protocols.
 - Extract source and destination port numbers.
-- Identify DNS queries.
-- Inspect packet sizes and timestamps.
-- Apply packet filtering during network capture.
+- Identify and display DNS queries.
+- Inspect packet timestamps and sizes.
+- Apply Berkeley Packet Filter (BPF) expressions.
+- Develop a command-line network monitoring tool.
 
-## Technologies Used
+## Technologies and Tools
 
 | Technology | Purpose |
 |---|---|
@@ -28,7 +29,40 @@ The project demonstrates practical knowledge of network protocols, packet inspec
 | Scapy | Packet capture and analysis |
 | Kali Linux | Development and testing environment |
 | TCP/IP | Network communication protocols |
-| Wireshark | Network traffic verification |
+| Wireshark | Packet analysis and verification |
+| libpcap | Packet capture and BPF filtering support |
+
+## Project Features
+
+### 1. Live Packet Capture
+Captures IP packets transmitted through a specified network interface.
+
+### 2. IP Address Identification
+Extracts and displays source and destination IP addresses.
+
+### 3. Protocol Detection
+Identifies common network protocols:
+- TCP
+- UDP
+- ICMP
+
+### 4. Port Inspection
+Extracts source and destination port numbers from TCP and UDP packets.
+
+### 5. DNS Query Detection
+Identifies DNS queries and extracts requested domain names when available.
+
+### 6. Packet Filtering
+Supports Berkeley Packet Filter (BPF) expressions to filter network traffic based on specified protocols or ports.
+
+### 7. Packet Metadata Analysis
+Displays:
+- Packet timestamp
+- Packet size
+- Source IP address
+- Destination IP address
+- Protocol type
+- Source and destination ports
 
 ## Project Structure
 
@@ -39,115 +73,39 @@ CodeAlpha_BasicNetworkSniffer/
 ├── README.md
 ├── requirements.txt
 └── screenshots/
+    ├── installation.png
+    ├── packet_capture.png
+    ├── protocol_detection.png
+    ├── dns_detection.png
+    └── packet_filtering.png
 ```
 
-## Features
+## Installation and Setup
 
-### 1. Packet Capture
-Captures live IP packets from a specified network interface.
-
-### 2. IP Address Identification
-Extracts source and destination IP addresses from captured packets.
-
-### 3. Protocol Detection
-Identifies common network protocols, including:
-- TCP
-- UDP
-- ICMP
-
-### 4. Port Inspection
-Displays source and destination port numbers for TCP and UDP packets.
-
-### 5. DNS Query Detection
-Identifies DNS queries and extracts requested domain names when available.
-
-### 6. Packet Filtering
-Supports Berkeley Packet Filter (BPF) expressions to narrow down captured traffic.
-
-### 7. Packet Information
-Displays packet timestamps, lengths, protocols, and addressing information.
-
-## Installation
-
-Clone the repository:
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/emmanuel101cyber/CodeAlpha_BasicNetworkSniffer.git
 ```
 
-Navigate into the project directory:
+### 2. Navigate to the Project Directory
 
 ```bash
 cd CodeAlpha_BasicNetworkSniffer
 ```
 
-Install Scapy:
+### 3. Install Dependencies
+
+Update the Kali Linux package repository:
 
 ```bash
 sudo apt update
-sudo apt install python3-scapy
 ```
 
-## Usage
-
-Run the network sniffer:
+Install Scapy and packet capture dependencies:
 
 ```bash
-sudo python3 network_sniffer.py -i eth0
+sudo apt install python3-scapy tcpdump libpcap-dev
 ```
 
-Capture a specified number of packets:
-
-```bash
-sudo python3 network_sniffer.py -i eth0 -c 30
-```
-
-Capture TCP traffic:
-
-```bash
-sudo python3 network_sniffer.py -i eth0 -f "tcp"
-```
-
-Capture UDP traffic:
-
-```bash
-sudo python3 network_sniffer.py -i eth0 -f "udp"
-```
-
-Replace `eth0` with the actual network interface available on your system.
-
-## Security and Ethical Considerations
-
-This tool is intended for educational purposes, authorised network monitoring, and controlled cybersecurity laboratory environments.
-
-Network packet capture should only be performed on networks and devices that you own or have explicit permission to monitor.
-
-The tool does not decrypt encrypted network communications.
-
-## Learning Outcomes
-
-Through this project, the following practical skills are explored:
-
-- Network packet analysis.
-- TCP/IP protocol fundamentals.
-- Python network programming.
-- Network traffic monitoring.
-- DNS inspection.
-- Basic network security analysis.
-- Command-line tool development.
-
-## Project Status
-
-Development and testing in progress.
-
-## Author
-
-**Idowu Oluwaferanmi Emmanuel**
-
-Cybersecurity | Network Security | Ethical Hacking
-
-GitHub: [@emmanuel101cyber](https://github.com/emmanuel101cyber)
-
----
-
-Developed as part of the CodeAlpha Cybersecurity Internship.
+###
