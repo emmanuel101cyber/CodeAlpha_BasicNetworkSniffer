@@ -108,4 +108,85 @@ Install Scapy and packet capture dependencies:
 sudo apt install python3-scapy tcpdump libpcap-dev
 ```
 
-###
+### 4. Verify Installation
+
+```bash
+python3 -c "import scapy.all; print('Scapy installed successfully')"
+```
+
+## Usage
+
+Run the network sniffer:
+
+```bash
+sudo python3 network_sniffer.py -i eth0
+```
+
+Capture a specified number of packets:
+
+```bash
+sudo python3 network_sniffer.py -i eth0 -c 30
+```
+
+Capture TCP traffic:
+
+```bash
+sudo python3 network_sniffer.py -i eth0 -f "tcp"
+```
+
+Capture UDP traffic:
+
+```bash
+sudo python3 network_sniffer.py -i eth0 -f "udp"
+```
+
+Replace `eth0` with the actual network interface available on your system.
+
+## Testing and Validation
+
+The application will be tested using controlled network traffic to validate:
+
+- Successful packet capture.
+- Correct source and destination IP identification.
+- TCP, UDP, and ICMP protocol detection.
+- Source and destination port extraction.
+- DNS query identification.
+- Packet size and timestamp extraction.
+- Successful application of packet filters.
+
+Wireshark may be used to independently verify captured packet information.
+
+## Security and Ethical Considerations
+
+This tool is intended for educational purposes, authorised network monitoring, and controlled cybersecurity laboratory environments.
+
+Network packet capture should only be performed on networks and devices that you own or have explicit permission to monitor.
+
+The application focuses on packet metadata and selected protocol headers. It does not decrypt encrypted network communications.
+
+## Learning Outcomes
+
+This project demonstrates practical experience in:
+
+- Network packet analysis.
+- TCP/IP protocol fundamentals.
+- Python network programming.
+- Network traffic monitoring.
+- DNS inspection.
+- Packet filtering.
+- Command-line tool development.
+- Basic network security analysis.
+
+## Project Status
+
+Development and testing in progress.
+
+## Author
+
+**Idowu Oluwaferanmi Emmanuel**
+
+Cybersecurity | Network Security | Ethical Hacking
+
+GitHub: https://github.com/emmanuel101cyber
+
+Developed as part of the CodeAlpha Cybersecurity Internship.
