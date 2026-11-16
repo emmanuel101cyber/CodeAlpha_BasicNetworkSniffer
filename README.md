@@ -599,28 +599,27 @@ Shows the application operating with a configured capture limit of five packets.
 ---
 
 ## 13. PROJECT DIRECTORY STRUCTURE
-
-```text
 CodeAlpha_BasicNetworkSniffer/
 │
-├── network_sniffer.py
+├── screenshots/
+│   ├── .gitkeep
+│   ├── 02-packet-capture.png
+│   ├── 03-icmp-packet-detection.png
+│   ├── 04-tcp-packet-detection.png
+│   ├── 05-dns-packet-detection.png
+│   ├── 06-bpf-filtering.png
+│   └── 07-packet-count-test.png
 │
-├── requirements.txt
+├── .gitignore
+│
+├── LICENSE
 │
 ├── README.md
 │
-└── screenshots/
-    │
-    ├── .gitkeep
-    ├── 02-packet-capture.png
-    ├── 03-icmp-packet-detection.png
-    ├── 04-tcp-packet-detection.png
-    ├── 05-dns-packet-detection.png
-    ├── 06-bpf-filtering.png
-    └── 07-packet-count-test.png
-```
+├── network_sniffer.py
+│
+└── requirements.txt
 
----
 
 ## 14. SECURITY AND ETHICAL CONSIDERATIONS
 
