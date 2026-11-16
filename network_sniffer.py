@@ -1,70 +1,103 @@
-from scapy.all import sniff, IP, TCP, UDP, ICMP, DNS, DNSQR, conf
+#!/usr/bin/env python3
+
+"""
+Basic Network Packet Sniffer
+Author: Idowu Oluwaferanmi Emmanuel
+
+A Python-based packet sniffer using Scapy.
+Captures and analyses IP packets for network security monitoring.
+"""
+
 import argparse
 from datetime import datetime
 
+from scapy.all import sniff, IP, TCP, UDP, ICMP, DNS, DNSQR
 
-def analyze_packet(packet):
 
-    if IP in packet:
+def analyse_packet(packet):
 
-        ip_layer = packet[IP]
+    if IP not in packet:
+        return
 
-        source_ip = ip_layer.src
-        destination_ip = ip_layer.dst
+    source_ip = packet[IP].src
+    destination_ip = packet[IP].dst
+    packet_size = len(packet)
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        protocol = "OTHER"
-        details = ""
+    protocol = "OTHER"
+    source_port = "N/A"
+    destination_port = "N/A"
 
-        if TCP in packet:
-            protocol = "TCP"
-            details = (
-                f"Source Port: {packet[TCP].sport} | "
-                f"Destination Port: {packet[TCP].dport}"
-            )
+    if TCP in packet:
+        protocol = "TCP"
+        source_port = packet[TCP].sport
+        destination_port = packet[TCP].dport
 
-        elif UDP in packet:
-            protocol = "UDP"
-            details = (
-                f"Source Port: {packet[UDP].sport} | "
-                f"Destination Port: {packet[UDP].dport}"
-            )
+    elif UDP in packet:
+        protocol = "UDP"
+        source_port = packet[UDP].sport
+        destination_port = packet[UDP].dport
 
-        elif ICMP in packet:
-            protocol = "ICMP"
-            details = f"ICMP Type: {packet[ICMP].type}"
+    elif ICMP in packet:
+        protocol = "ICMP"
 
-        if DNS in packet and packet[DNS].qd:
-            query = packet[DNS].qd
-            if DNSQR in query:
-                domain = query[DNSQR].qname.decode(
-                    errors="replace"
-                ).rstrip("\x00")
+    print("\n" + "=" * 55)
+    print("NETWORK PACKET DETECTED")
+    print("=" * 55)
 
-                details += f" | DNS Query: {domain}"
+    print(f"Timestamp:          {timestamp}")
+    print(f"Source IP:          {source_ip}")
+    print(f"Destination IP:     {destination_ip}")
+    print(f"Protocol:           {protocol}")
+    print(f"Source Port:        {source_port}")
+    print(f"Destination Port:   {destination_port}")
+    print(f"Packet Size:        {packet_size} bytes")
 
-        timestamp = datetime.now().strftime(
-            "%Y-%m-%d %H:%M:%S"
+    if DNS in packet and DNSQR in packet:
+        query = packet[DNSQR].qname.decode(errors="ignore")
+        print(f"DNS Query:          {query}")
+
+    print("=" * 55)
+
+
+def start_sniffer(interface, count, packet_filter):
+
+    print("\n" + "=" * 55)
+    print("PYTHON NETWORK PACKET SNIFFER")
+    print("=" * 55)
+
+    print(f"Interface: {interface}")
+    print(f"Packet Filter: {packet_filter or 'None'}")
+    print(f"Packet Limit: {count if count else 'Unlimited'}")
+
+    print("\nListening for network traffic...")
+    print("Press CTRL+C to stop capturing.\n")
+
+    try:
+        sniff(
+            iface=interface,
+            prn=analyse_packet,
+            filter=packet_filter,
+            count=count,
+            store=False
         )
 
-        print("\n" + "=" * 65)
-        print(f"Timestamp:       {timestamp}")
-        print(f"Source IP:       {source_ip}")
-        print(f"Destination IP:  {destination_ip}")
-        print(f"Protocol:        {protocol}")
-        print(f"Packet Length:   {len(packet)} bytes")
-        print(f"Details:         {details}")
-        print("=" * 65)
+    except KeyboardInterrupt:
+        print("\nPacket capture stopped.")
+
+    except Exception as error:
+        print(f"\nError: {error}")
 
 
 def main():
 
     parser = argparse.ArgumentParser(
-        description="Python Basic Network Sniffer"
+        description="Python Network Packet Sniffer using Scapy"
     )
 
     parser.add_argument(
         "-i", "--interface",
-        default=conf.iface,
+        required=True,
         help="Network interface to monitor"
     )
 
@@ -72,40 +105,25 @@ def main():
         "-c", "--count",
         type=int,
         default=0,
-        help="Number of packets to capture (0 = unlimited)"
+        help="Number of packets to capture (0 means unlimited)"
     )
 
     parser.add_argument(
         "-f", "--filter",
-        default="ip",
-        help="BPF capture filter (default: ip)"
+        default="",
+        help="BPF packet filter, e.g. tcp, udp or icmp"
     )
 
     args = parser.parse_args()
 
-    print("\n[+] CODEALPHA BASIC NETWORK SNIFFER")
-    print("[+] Starting packet capture...")
-    print(f"[+] Interface: {args.interface}")
-    print(f"[+] Filter: {args.filter}")
-    print("[+] Press CTRL+C to stop.\n")
+    if args.count < 0:
+        parser.error("Packet count cannot be negative.")
 
-    try:
-        sniff(
-            iface=args.interface,
-            filter=args.filter,
-            prn=analyze_packet,
-            store=False,
-            count=args.count
-        )
-
-    except KeyboardInterrupt:
-        print("\n[!] Packet capture stopped.")
-
-    except PermissionError:
-        print("[!] Permission denied. Run with sudo.")
-
-    except Exception as error:
-        print(f"[!] Error: {error}")
+    start_sniffer(
+        args.interface,
+        args.count,
+        args.filter
+    )
 
 
 if __name__ == "__main__":
