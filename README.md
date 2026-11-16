@@ -1,83 +1,55 @@
-# Network Packet Sniffer Using Python and Scapy
+# Python Network Packet Sniffer
 
-A Python-based network packet sniffer developed using Scapy to capture, monitor, and analyse network traffic for cybersecurity and network security analysis.
+A Python-based network packet sniffer developed using **Scapy** to capture, inspect, and analyse network traffic in real time.
+
+This project was developed as part of my **CodeAlpha Cybersecurity Internship** to gain practical experience in network traffic analysis, packet inspection, and network security monitoring.
+
+---
 
 ## Project Overview
 
-This project involves developing a lightweight network packet sniffer capable of capturing and analysing IP packets transmitted across a network interface.
+Network packet analysis is an important aspect of cybersecurity. It helps security professionals understand network communication, identify protocols, inspect traffic patterns, and monitor activity across a network.
 
-The tool provides visibility into network communications by identifying source and destination IP addresses, detecting network protocols, inspecting transport-layer information, identifying DNS queries, and displaying relevant packet metadata.
+This project implements a basic network packet sniffer using Python and Scapy. It captures packets from a specified network interface and extracts relevant information for analysis.
 
-The project demonstrates practical knowledge of TCP/IP networking, packet inspection, Python programming, and network security monitoring.
+The tool was developed and tested in a Kali Linux environment.
 
 ## Project Objectives
 
-- Capture live network traffic from a specified network interface.
-- Identify source and destination IP addresses.
-- Detect TCP, UDP, and ICMP protocols.
-- Extract source and destination port numbers.
-- Identify and display DNS queries.
-- Inspect packet timestamps and sizes.
+- Understand how network packets travel across a network.
+- Capture live network traffic using Python.
+- Identify common network protocols.
+- Extract source and destination IP addresses.
+- Inspect TCP and UDP port information.
+- Identify DNS queries and requested domain names.
 - Apply Berkeley Packet Filter (BPF) expressions.
-- Develop a command-line network monitoring tool.
+- Practise network monitoring and packet analysis.
 
 ## Technologies and Tools
 
 | Technology | Purpose |
 |---|---|
-| Python 3 | Core programming language |
+| Python 3 | Programming language |
 | Scapy | Packet capture and analysis |
-| Kali Linux | Development and testing environment |
-| TCP/IP | Network communication protocols |
-| Wireshark | Packet analysis and verification |
-| libpcap | Packet capture and BPF filtering support |
+| Kali Linux | Testing environment |
+| TCP/IP | Network communication |
+| BPF | Packet filtering |
+| Git and GitHub | Version control and documentation |
 
-## Project Features
+## Features
 
-### 1. Live Packet Capture
-Captures IP packets transmitted through a specified network interface.
+The packet sniffer supports the following functionality:
 
-### 2. IP Address Identification
-Extracts and displays source and destination IP addresses.
+1. **Live Packet Capture:** Captures network packets in real time.
+2. **IP Address Identification:** Displays source and destination IP addresses.
+3. **Protocol Detection:** Identifies TCP, UDP, and ICMP packets.
+4. **Port Inspection:** Displays source and destination ports for TCP and UDP traffic.
+5. **DNS Query Detection:** Extracts requested domain names from DNS packets.
+6. **Packet Size Analysis:** Displays the size of captured packets.
+7. **Timestamp Recording:** Displays the time each packet is processed.
+8. **BPF Filtering:** Filters traffic based on specified conditions.
+9. **Packet Count Limitation:** Allows users to specify how many packets to capture.
 
-### 3. Protocol Detection
-Identifies common network protocols:
-- TCP
-- UDP
-- ICMP
-
-### 4. Port Inspection
-Extracts source and destination port numbers from TCP and UDP packets.
-
-### 5. DNS Query Detection
-Identifies DNS queries and extracts requested domain names when available.
-
-### 6. Packet Filtering
-Supports Berkeley Packet Filter (BPF) expressions to filter network traffic based on specified protocols or ports.
-
-### 7. Packet Metadata Analysis
-Displays:
-- Packet timestamp
-- Packet size
-- Source IP address
-- Destination IP address
-- Protocol type
-- Source and destination ports
-
-## Project Structure
-
-```text
-CodeAlpha_BasicNetworkSniffer/
-│
-├── network_sniffer.py
-├── README.md
-├── requirements.txt
-└── screenshots/
-    ├── installation.png
-    ├── packet_capture.png
-    ├── protocol_detection.png
-    ├── dns_detection.png
-    └── packet_filtering.png
 ```
 
 ## Installation and Setup
@@ -96,97 +68,302 @@ cd CodeAlpha_BasicNetworkSniffer
 
 ### 3. Install Dependencies
 
-Update the Kali Linux package repository:
-
 ```bash
-sudo apt update
+pip install -r requirements.txt
 ```
 
-Install Scapy and packet capture dependencies:
+If your Kali Linux environment restricts system-wide pip installations, use a Python virtual environment or Kali's packaged Scapy installation.
+
+### 4. Identify Your Network Interface
 
 ```bash
-sudo apt install python3-scapy tcpdump libpcap-dev
+ip -br addr
 ```
 
-### 4. Verify Installation
+Example:
 
-```bash
-python3 -c "import scapy.all; print('Scapy installed successfully')"
+```text
+eth0    UP    10.0.2.15/24
 ```
+
+In this example, `eth0` is the interface used for packet capture.
 
 ## Usage
 
-Run the network sniffer:
+The script requires a network interface.
+
+### Basic Packet Capture
 
 ```bash
 sudo python3 network_sniffer.py -i eth0
 ```
 
-Capture a specified number of packets:
+### Capture a Specific Number of Packets
 
 ```bash
-sudo python3 network_sniffer.py -i eth0 -c 30
+sudo python3 network_sniffer.py -i eth0 -c 10
 ```
 
-Capture TCP traffic:
+### Capture TCP Traffic Only
 
 ```bash
-sudo python3 network_sniffer.py -i eth0 -f "tcp"
+sudo python3 network_sniffer.py -i eth0 -f tcp
 ```
 
-Capture UDP traffic:
+### Capture UDP Traffic Only
 
 ```bash
-sudo python3 network_sniffer.py -i eth0 -f "udp"
+sudo python3 network_sniffer.py -i eth0 -f udp
 ```
 
-Replace `eth0` with the actual network interface available on your system.
+### Capture ICMP Traffic Only
 
-## Testing and Validation
+```bash
+sudo python3 network_sniffer.py -i eth0 -f icmp
+```
 
-The application will be tested using controlled network traffic to validate:
+### Capture DNS Traffic Only
 
-- Successful packet capture.
-- Correct source and destination IP identification.
-- TCP, UDP, and ICMP protocol detection.
-- Source and destination port extraction.
-- DNS query identification.
-- Packet size and timestamp extraction.
-- Successful application of packet filters.
+```bash
+sudo python3 network_sniffer.py -i eth0 -f "udp port 53"
+```
 
-Wireshark may be used to independently verify captured packet information.
+### View Available Options
 
-## Security and Ethical Considerations
+```bash
+python3 network_sniffer.py --help
+```
 
-This tool is intended for educational purposes, authorised network monitoring, and controlled cybersecurity laboratory environments.
+Press `CTRL+C` to stop an unlimited packet capture.
 
-Network packet capture should only be performed on networks and devices that you own or have explicit permission to monitor.
+## Practical Testing and Results
 
-The application focuses on packet metadata and selected protocol headers. It does not decrypt encrypted network communications.
+The project was tested in Kali Linux using the `eth0` network interface.
 
-## Learning Outcomes
+The following tests were performed to verify the functionality of the packet sniffer.
 
-This project demonstrates practical experience in:
+| Test | Testing Method | Result |
+|---|---|---|
+| Live packet capture | Captured network traffic on `eth0` | Passed |
+| UDP detection | Captured UDP traffic on port 123 | Passed |
+| TCP detection | Generated HTTPS traffic using curl | Passed |
+| ICMP detection | Pinged `8.8.8.8` | Passed |
+| DNS query detection | Queried `codealpha.tech` using nslookup | Passed |
+| IP identification | Inspected source and destination addresses | Passed |
+| Port inspection | Inspected TCP and UDP ports | Passed |
+| Packet size inspection | Examined captured packet lengths | Passed |
+| BPF filtering | Captured ICMP traffic using an ICMP filter | Passed |
+| Packet count limitation | Restricted capture to five packets | Passed |
 
-- Network packet analysis.
-- TCP/IP protocol fundamentals.
-- Python network programming.
-- Network traffic monitoring.
-- DNS inspection.
-- Packet filtering.
-- Command-line tool development.
-- Basic network security analysis.
+### Test 1: UDP Packet Detection
+
+UDP packets were captured during network communication.
+
+The sniffer identified traffic involving destination port `123`, commonly associated with Network Time Protocol (NTP).
+
+### Test 2: ICMP Packet Detection
+
+ICMP traffic was generated using:
+
+```bash
+ping -c 5 8.8.8.8
+```
+
+The sniffer successfully captured outgoing ICMP Echo Requests and incoming Echo Replies.
+
+### Test 3: TCP Packet Detection
+
+HTTPS traffic was generated using:
+
+```bash
+curl -I https://www.codealpha.tech/
+```
+
+The sniffer successfully identified TCP traffic associated with destination port `443`.
+
+### Test 4: DNS Query Detection
+
+DNS resolution was tested using:
+
+```bash
+nslookup codealpha.tech
+```
+
+The DNS lookup successfully returned IPv4 and IPv6 addresses.
+
+The packet sniffer was used to inspect DNS traffic and identify the requested domain.
+
+### Test 5: BPF Filtering
+
+The following command was used:
+
+```bash
+sudo python3 network_sniffer.py -i eth0 -c 10 -f icmp
+```
+
+The sniffer successfully captured ICMP traffic without displaying unrelated TCP or UDP packets.
+
+### Test 6: Packet Count Limitation
+
+The following command was used:
+
+```bash
+sudo python3 network_sniffer.py -i eth0 -c 5 -f icmp
+```
+
+The packet sniffer successfully stopped after capturing five packets.
+
+---
+
+## Evidence and Screenshots
+
+Screenshots of the practical implementation and testing process are available in the `screenshots/` directory.
+
+These screenshots provide evidence of the tool's functionality and the tests performed.
+
+### 1. Live Packet Capture
+
+**File:** `02-packet-capture.png`
+
+Evidence of live network traffic capture, including packet information and protocol identification.
+
+![Live Packet Capture](screenshots/02-packet-capture.png)
+
+### 2. ICMP Packet Detection
+
+**File:** `03-icmp-packet-detection.png`
+
+Evidence showing outgoing and incoming ICMP packets between the Kali machine and `8.8.8.8`.
+
+![ICMP Packet Detection](screenshots/03-icmp-packet-detection.png)
+
+### 3. TCP Packet Detection
+
+**File:** `04-tcp-packet-detection.png`
+
+Evidence showing TCP traffic captured during an HTTPS connection.
+
+![TCP Packet Detection](screenshots/04-tcp-packet-detection.png)
+
+### 4. DNS Query Detection
+
+**File:** `05-dns-packet-detection.png`
+
+Evidence showing DNS traffic inspection and domain query identification.
+
+![DNS Query Detection](screenshots/05-dns-packet-detection.png)
+
+### 5. BPF Filtering
+
+**File:** `06-bpf-filtering.png`
+
+Evidence showing the packet sniffer capturing ICMP traffic using a BPF filter.
+
+![BPF Filtering](screenshots/06-bpf-filtering.png)
+
+### 6. Packet Count Limitation
+
+**File:** `07-packet-count-test.png`
+
+Evidence showing the packet sniffer successfully limiting packet capture to five packets.
+
+![Packet Count Test](screenshots/07-packet-count-test.png)
+
+---
+
+## How to Capture and Upload Evidence Screenshots
+
+All screenshots should be captured from the Kali Linux terminal during actual project execution.
+
+### Step 1: Run the Relevant Test
+
+For example:
+
+```bash
+sudo python3 network_sniffer.py -i eth0 -c 10 -f icmp
+```
+
+### Step 2: Generate Network Traffic
+
+Open another terminal and generate the appropriate traffic.
+
+For ICMP:
+
+```bash
+ping -c 5 8.8.8.8
+```
+
+### Step 3: Capture the Terminal
+
+Use the Kali Linux screenshot utility or press `PrtSc` on your keyboard.
+
+Ensure the screenshot clearly shows:
+
+- The packet sniffer heading.
+- The selected network interface.
+- The packet information.
+- The detected protocol.
+- Relevant source and destination addresses.
+
+Avoid screenshots containing passwords, private information, or unrelated terminal activity.
+
+### Step 4: Save the Screenshot
+
+Use the filenames specified in the Evidence and Screenshots section.
+
+### Step 5: Upload to GitHub
+
+1. Open the project repository.
+2. Navigate to the `screenshots` folder.
+3. Click **Add file**.
+4. Select **Upload files**.
+5. Select the screenshot from your computer.
+6. Click **Commit changes**.
+
+Repeat these steps for each screenshot.
+
+**Important:** Keep the filenames exactly as specified in this README so the images display correctly on GitHub.
+
+---
+
+## Ethical Considerations
+
+This project was developed for educational and cybersecurity training purposes.
+
+Packet capture should only be performed on networks and systems that you own or have explicit permission to monitor.
+
+The project focuses on packet metadata and protocol identification. It does not decrypt HTTPS communications or bypass network security controls.
+
+## Skills Demonstrated
+
+Through this project, I gained practical experience in:
+
+- Python programming for cybersecurity.
+- Network packet capture and inspection.
+- TCP/IP protocol analysis.
+- TCP, UDP, and ICMP identification.
+- DNS traffic analysis.
+- BPF packet filtering.
+- Kali Linux command-line operations.
+- Practical network troubleshooting.
+- Technical documentation and GitHub project management.
 
 ## Project Status
 
-Development and testing in progress.
+**Status: Core implementation and functional testing completed.**
+
+The packet sniffer successfully captures and analyses TCP, UDP, ICMP, and DNS traffic, applies packet filters, and supports packet count limitations.
 
 ## Author
 
 **Idowu Oluwaferanmi Emmanuel**
 
-Cybersecurity | Network Security | Ethical Hacking
+Cybersecurity Student | Network Security | Ethical Hacking
 
-GitHub: https://github.com/emmanuel101cyber
+GitHub: [@emmanuel101cyber](https://github.com/emmanuel101cyber)
 
-Developed as part of the CodeAlpha Cybersecurity Internship.
+Project Repository: [CodeAlpha_BasicNetworkSniffer](https://github.com/emmanuel101cyber/CodeAlpha_BasicNetworkSniffer)
+
+---
+
+*Developed as part of the CodeAlpha Cybersecurity Internship.*
