@@ -4,7 +4,7 @@
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
 ![Scapy](https://img.shields.io/badge/Library-Scapy-red)
 ![Platform](https://img.shields.io/badge/Platform-Kali%20Linux-black?logo=kalilinux)
-![Project](https://img.shields.io/badge/Project-CodeAlpha%20Internship-orange)
+![Project](https://img.shields.io/badge/Project-Independent%20Cybersecurity%20Project-orange)
 ![Status](https://img.shields.io/badge/Status-Testing%20Completed-success)
 
 ---
@@ -15,13 +15,12 @@
 |---|---|
 | Project Title | Python Network Packet Sniffer |
 | Project Category | Network Security and Traffic Analysis |
-| Internship Programme | CodeAlpha Cybersecurity Internship |
+| Project Type | Independent Cybersecurity Project |
 | Programming Language | Python 3 |
 | Packet Analysis Library | Scapy |
 | Operating System | Kali Linux |
 | Network Interface | eth0 |
 | Network Environment | VirtualBox Network Environment |
-| Project Type | Practical Cybersecurity Project |
 | Project Status | Implementation and Functional Testing Completed |
 | Author | Idowu Oluwaferanmi Emmanuel |
 
@@ -107,7 +106,7 @@ The primary objectives were to:
 
 ### Python Libraries
 
-**Scapy**
+#### Scapy
 
 Scapy is a Python-based packet manipulation library that supports packet creation, transmission, capture, and analysis.
 
@@ -119,11 +118,11 @@ It was used to:
 - Inspect DNS query information.
 - Apply packet capture filters.
 
-**Argparse**
+#### Argparse
 
 The built-in Python `argparse` module was used to provide command-line arguments for configuring the packet sniffer.
 
-**Datetime**
+#### Datetime
 
 The `datetime` module was used to generate timestamps for captured packet output.
 
@@ -154,68 +153,63 @@ The application follows a straightforward packet capture and analysis workflow.
 ### Packet Processing Workflow
 
 ```text
-             START
-               |
-               v
-       Parse Command-Line
-          Arguments
-               |
-               v
-       Select Network
-          Interface
-               |
-               v
-        Initialize Scapy
-          Packet Capture
-               |
-               v
-       Capture Network
-            Packet
-               |
-               v
-        Check IP Layer
-               |
-               v
-       Extract Packet
-          Metadata
-               |
-               v
-       Identify Protocol
-               |
-       +-------+-------+
-       |       |       |
-       v       v       v
-      TCP     UDP     ICMP
-       |       |       |
-       v       v       v
-     Ports   Ports   Protocol
-       |       |       |
-       +-------+-------+
-               |
-               v
-        Check for DNS
-               |
-               v
-       Extract DNS Query
-          if Available
-               |
-               v
-       Display Packet
-          Information
-               |
-               v
-       Continue Capture
-               |
-               v
-        Capture Limit
-          Reached?
-               |
-          +----+----+
-          |         |
-          No        Yes
-          |         |
-          v         v
-       Continue    STOP
+                  START
+                    |
+                    v
+          Parse Command-Line
+              Arguments
+                    |
+                    v
+           Select Network
+              Interface
+                    |
+                    v
+           Initialize Scapy
+            Packet Capture
+                    |
+                    v
+          Capture Network
+               Packet
+                    |
+                    v
+            Check IP Layer
+                    |
+                    v
+          Extract Packet Metadata
+                    |
+                    v
+          Identify Protocol
+                    |
+          +---------+---------+
+          |         |         |
+          v         v         v
+         TCP       UDP      ICMP
+          |         |         |
+          v         v         v
+        Ports     Ports    Protocol
+          |         |         |
+          +---------+---------+
+                    |
+                    v
+            Check for DNS
+                    |
+                    v
+          Extract DNS Query
+             if Available
+                    |
+                    v
+          Display Packet Information
+                    |
+                    v
+           Continue Capture
+                    |
+                    v
+          Capture Limit Reached?
+              /          \
+            NO            YES
+            |              |
+            v              v
+         CONTINUE         STOP
 ```
 
 ### Processing Description
@@ -562,7 +556,7 @@ Shows outgoing and incoming ICMP packets generated during a connectivity test to
 
 **Description:**
 
-Shows TCP packet information captured during an HTTPS connection to the CodeAlpha website.
+Shows TCP packet information captured during an HTTPS connection.
 
 ![TCP Detection](screenshots/04-tcp-packet-detection.png)
 
@@ -599,7 +593,9 @@ Shows the application operating with a configured capture limit of five packets.
 ---
 
 ## 13. PROJECT DIRECTORY STRUCTURE
-CodeAlpha_BasicNetworkSniffer/
+
+```text
+Python-Network-Packet-Sniffer/
 │
 ├── screenshots/
 │   ├── .gitkeep
@@ -619,7 +615,9 @@ CodeAlpha_BasicNetworkSniffer/
 ├── network_sniffer.py
 │
 └── requirements.txt
+```
 
+---
 
 ## 14. SECURITY AND ETHICAL CONSIDERATIONS
 
@@ -727,16 +725,16 @@ It represents a practical application of fundamental network security concepts a
 
 **Author:** Idowu Oluwaferanmi Emmanuel
 
-**Programme:** CodeAlpha Cybersecurity Internship
+**Project:** Python Network Packet Sniffer
 
-**Project:** Basic Network Packet Sniffer
+**Project Type:** Independent Cybersecurity Project
 
 **GitHub:** [emmanuel101cyber](https://github.com/emmanuel101cyber)
 
-**Repository:** [CodeAlpha_BasicNetworkSniffer](https://github.com/emmanuel101cyber/CodeAlpha_BasicNetworkSniffer)
+**Repository:** [Python-Network-Packet-Sniffer](https://github.com/emmanuel101cyber/Python-Network-Packet-Sniffer)
 
 **Project Focus:** Network Security | Python | Scapy | Packet Analysis | Ethical Hacking
 
 ---
 
-*Developed for educational and professional cybersecurity skill development as part of the CodeAlpha Cybersecurity Internship.*
+*Developed as an independent practical cybersecurity project for technical learning, experimentation, and portfolio development.*
